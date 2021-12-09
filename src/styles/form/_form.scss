@@ -1,0 +1,21 @@
+.form {
+  max-width: 500px;
+  margin: 20px auto;
+  
+  input {
+    margin: 20px 0;
+  }
+
+  button {
+    background-color: $secondary-color;
+    border: none;
+    color: white;
+    font-weight: bold;
+
+  }
+  
+  button:hover {
+    background-color: $primary-color!important;
+  }
+
+}

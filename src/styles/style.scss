@@ -1,0 +1,8 @@
+// constants
+$primary-color: rgb(233, 54, 84);
+$secondary-color: rgb(58, 36, 58);
+
+@import './navbar/navbar';
+@import './form/form';
+@import './postcard/postcard';
+@import "./postdetails/postdetails"

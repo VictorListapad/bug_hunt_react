@@ -1,0 +1,47 @@
+.customNavbar {
+  background: linear-gradient(90deg, rgb(47, 12, 70), rgb(99, 9, 160));
+  background-size: 100% 200%;
+  animation: AnimationName 9s ease infinite;
+
+  
+
+  img {
+    max-height: 50px;
+    color: white;
+    filter: opacity(0.5) drop-shadow(0 0 0 blue) !important;
+  }
+
+  .navbar-brand {
+    color: white;
+    filter: opacity(0.5) drop-shadow(0 0 0 rgb(248, 22, 109)) !important;
+  }
+
+  a {
+    margin-right: 8px;
+    font-weight: bold;
+    text-decoration: none !important;
+    color: white !important;
+  }
+
+  a.active {
+    color: $primary-color !important;
+  }
+
+  button {
+    color: $primary-color;
+    font-weight: bold;
+  }
+}
+
+
+@-moz-keyframes AnimationName {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}

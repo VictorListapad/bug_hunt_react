@@ -1,24 +1,30 @@
-import logo from './logo.svg';
-import './App.css';
+import { ToastContainer } from 'react-toastify';
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import NavBar from './components/NavBar';
+import AddPostView from './views/AddPostView';
+
+// import views here
+import HomeView from './views/HomeView'
+import LoginView from './views/LoginView'
+import PostDetailView from './views/PostDetailView';
+import AuthRoute from './components/AuthRoute';
+import SignupView from './views/SignupView';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+      <ToastContainer />
+      <NavBar/>
+      <Routes>
+        <Route path="/" element={<HomeView/>} />
+        <Route path="/login" element={<LoginView/>} />
+        <Route path="/signup" element={<SignupView/>} />
+        <Route path="/post/:id" element={<PostDetailView/>} />
+        <Route element={<AuthRoute/>}>
+          <Route path="/addPost" element={<AddPostView/>} />
+        </Route>
+      </Routes>
+    </BrowserRouter>
   );
 }
 

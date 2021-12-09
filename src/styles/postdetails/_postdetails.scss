@@ -1,0 +1,19 @@
+.postDetails {
+
+  display: flex;
+  flex-direction: column;
+
+  .tags {
+    border: 1px solid lightgrey;
+    box-shadow: 0px 0px 5px lightgray;
+    padding: 10px;
+    border-radius: 5px;
+  }
+
+  code {
+    color: cyan;
+    background-color: rgb(30, 8, 54);
+    padding: 20px;
+  }
+
+}
