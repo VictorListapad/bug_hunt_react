@@ -12,8 +12,12 @@ const CategoryProvider = ({children}) => {
 
   const getCategories = async () => {
     // GET/api/categories
-    const response = await apiHelper("/categories");
-    setCategories(response.data);
+    try {
+      const response = await apiHelper("/categories");
+      setCategories(response.data);
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   return (

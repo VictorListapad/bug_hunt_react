@@ -55,7 +55,7 @@ const PostDetailView = () => {
             <p>{tag.name}</p>
           ))}
           {singlePost.tags.length === 0 && <p>No tags to display</p>}
-          {user._id === singlePost.author._id && (
+          {user._id === singlePost.author?._id && (
             <Link to={`/editPost/${id}`} className="btn btn-outline-dark">
               Edit
             </Link>

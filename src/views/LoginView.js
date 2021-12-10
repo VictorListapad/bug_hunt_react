@@ -13,7 +13,7 @@ const LoginView = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    await loginUser(user);
+    await loginUser({email: user.email, password: user.password});
   }
 
   return (

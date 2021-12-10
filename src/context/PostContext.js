@@ -26,8 +26,12 @@ const PostProvider = ({children}) => {
   }
 
   const getPostById = async (id) => {
-    const response = await apiHelper.get(`/posts/post/${id}`);
-    setSinglePost(response.data);
+    try {
+      const response = await apiHelper.get(`/posts/post/${id}`);
+      setSinglePost(response.data);
+    } catch (error) {
+      console.log(error);      
+    }
   }
 
   const createPost = async (obj) => {
