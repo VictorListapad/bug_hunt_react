@@ -21,7 +21,11 @@ const AuthProvider = ({children}) => {
 
   const checkedLogged = () => {
     const tokenValue = JSON.parse(localStorage.getItem(jwt_string));
-    setUserName(tokenValue.user.name);
+    try {
+      setUserName(tokenValue.user.name);
+    } catch (error) {
+      console.log(error);
+    }
     return tokenValue ? setLoggedIn(true) : setLoggedIn(false);
   }
 
