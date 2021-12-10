@@ -1,9 +1,11 @@
 import { createContext, useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
 import apiHelper from '../apiHelper/apiHelper';
 
 export const PostContext = createContext({});
 
 const PostProvider = ({children}) => {
+  const jwt_string = "jwtbughunt";
   const [posts, setPosts] = useState([]);
   const [singlePost, setSinglePost] = useState({
     title: "",
@@ -29,9 +31,26 @@ const PostProvider = ({children}) => {
   }
 
   const createPost = async (obj) => {
-    obj.author = "61b0c8ce2d0b0f3eef92da6e";
-    obj.date = "2021/12/06";
+    let { user } = JSON.parse(localStorage.getItem(jwt_string));
+    obj.author = user._id;
+    obj.date = new Date().toLocaleDateString();
     const response = await apiHelper.post("/posts/post", obj);
+    toast.success('Post creted succcessfully');
+    getAllPosts();
+  }
+
+  const editPost = async (id, obj) => {
+    let {user} = JSON.parse(localStorage.getItem(jwt_string));
+    if (obj.author._id !== user._id ) return;
+    const response = await apiHelper.put(`/posts/post/${id}`, obj);
+    toast.success('Post updated succcessfully');
+    getAllPosts();
+  }
+
+  const deletePost = async (id) => {
+    await apiHelper.delete(`/posts/post/${id}`);
+    toast.error("Deleted post successfully")
+    getAllPosts();
   }
 
   return (
@@ -41,6 +60,8 @@ const PostProvider = ({children}) => {
         singlePost,
         getPostById,
         createPost,
+        editPost,
+        deletePost,
         setSinglePost
       }}
     >

@@ -7,6 +7,7 @@ export const AuthContext = createContext({});
 const AuthProvider = ({children}) => {
   const jwt_string = "jwtbughunt";
   const [loggedIn, setLoggedIn] = useState(false)
+  const [userName, setUserName] = useState("");
   const [user, setUser] = useState({
     name: "",
     email: "",
@@ -20,6 +21,7 @@ const AuthProvider = ({children}) => {
 
   const checkedLogged = () => {
     const tokenValue = JSON.parse(localStorage.getItem(jwt_string));
+    setUserName(tokenValue.user.name);
     return tokenValue ? setLoggedIn(true) : setLoggedIn(false);
   }
 
@@ -68,6 +70,7 @@ const AuthProvider = ({children}) => {
       value={{
         user,
         setUser,
+        userName,
         loggedIn,
         loginUser,
         logOutUser,

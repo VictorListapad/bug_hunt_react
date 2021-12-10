@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { CategoryContext } from "../context/CategoryContext";
 import { PostContext } from "../context/PostContext";
@@ -9,18 +9,35 @@ const AddPostView = () => {
   const [selected, setSelected] = useState([]);
   const navigate = useNavigate();
 
+  useEffect(() => {
+    setSinglePost({
+      title: "",
+      author: "",
+      tags: [],
+      content: "",
+      date: "",
+      price: 0,
+    });
+  }, []);
+
   const handleChange = (event) => {
     setSinglePost({
       ...singlePost,
       [event.target.name]: event.target.value,
     });
+    console.log(singlePost);
   };
 
   const handleSelectCheckbox = (event) => {
-    const tag = event.target.value;
-    const idFound = selected.find((id) => tag === id);
-    if (idFound) return;
-    setSelected([...selected, event.target.value]);
+    const tagToAdd = event.target.value;
+    console.log("TAG", tagToAdd);
+    if (selected.includes(tagToAdd)) {
+      setSelected(selected.filter((cat) => cat !== tagToAdd));
+      setSinglePost({ ...singlePost, tags: [...selected] });
+    } else {
+      setSelected((oldValues) => [...oldValues, tagToAdd]);
+      setSinglePost({ ...singlePost, tags: [...selected] });
+    }
     console.log(selected);
   };
 
@@ -29,11 +46,17 @@ const AddPostView = () => {
     setSinglePost({
       ...singlePost,
       tags: [...selected],
-      // author: "61b0c8ce2d0b0f3eef92da6e",
-      // date: "2021/12/06",
     });
-    // console.log("OBJ before api call", singlePost)
     createPost(singlePost);
+    setSinglePost({
+      title: "",
+      author: "",
+      tags: [],
+      content: "",
+      date: "",
+      price: 0,
+    });
+    navigate("/")
   };
 
   return (
@@ -74,8 +97,8 @@ const AddPostView = () => {
             />
             <label style={{ marginLeft: "2px" }}>{cat.name}</label>
           </div>
-          // <p key={cat._id}>{cat.name}</p>
         ))}
+        <br />
         <label>Price</label>
         <input
           name="price"

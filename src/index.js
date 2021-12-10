@@ -10,16 +10,19 @@ import PostProvider from "./context/PostContext";
 import CategoryProvider from "./context/CategoryContext";
 import AuthProvider from "./context/AuthContext";
 import 'react-toastify/dist/ReactToastify.css';
+import CommentProvider from "./context/CommentContext";
 
 ReactDOM.render(
   <React.StrictMode>
-    <PostProvider>
-      <CategoryProvider>
-        <AuthProvider>
-          <App />
-        </AuthProvider>
-      </CategoryProvider>
-    </PostProvider>
+    <CommentProvider>
+      <PostProvider>
+        <CategoryProvider>
+          <AuthProvider>
+            <App />
+          </AuthProvider>
+        </CategoryProvider>
+      </PostProvider>
+    </CommentProvider>
   </React.StrictMode>,
   document.getElementById("root")
 );
