@@ -83,6 +83,7 @@ const PostDetailView = () => {
         </form>
         {comments?.map((comment) => (
           <div
+            key={comment._id}
             style={{
               display: "flex",
               justifyContent: "space-between",
@@ -93,9 +94,9 @@ const PostDetailView = () => {
               backgroundColor: "lightgrey",
             }}
           > 
-            <p>{user.name}</p>
+            <p>{comment.user.name}</p>
             <p key={comment._id}>{comment.content}</p>
-            {user._id === comment.user && (
+            {user._id === comment.user._id && (
               <button 
                 onClick={() => handleDelete(comment)}
                 className="btn btn-danger">
