@@ -9,6 +9,14 @@ const AddPostView = () => {
   const [selected, setSelected] = useState([]);
   const navigate = useNavigate();
 
+  
+  // everytime the checkboxes change, make a call to the use 
+  // effect to change the state of the tags property
+  useEffect(() => {
+    setSinglePost({...singlePost, tags: [...selected]})
+  }, [selected])
+  
+  // this goes after because we want this to run afterwards
   useEffect(() => {
     setSinglePost({
       title: "",
@@ -29,16 +37,14 @@ const AddPostView = () => {
   };
 
   const handleSelectCheckbox = (event) => {
-    const tagToAdd = event.target.value;
-    console.log("TAG", tagToAdd);
-    if (selected.includes(tagToAdd)) {
-      setSelected(selected.filter((cat) => cat !== tagToAdd));
-      setSinglePost({ ...singlePost, tags: [...selected] });
-    } else {
-      setSelected((oldValues) => [...oldValues, tagToAdd]);
-      setSinglePost({ ...singlePost, tags: [...selected] });
-    }
-    console.log(selected);
+    const value = event.target.value;
+    const currentIndex = selected.findIndex(cat => cat === value);
+    let newChecked = [];
+     // if value not there, add it;
+    if (currentIndex === -1) newChecked = [...selected, value];
+    // else remove it if already checked
+    else newChecked = newChecked.filter(cat => cat !== value);
+    setSelected(newChecked);
   };
 
   const handleSubmit = async (event) => {

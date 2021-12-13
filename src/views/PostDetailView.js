@@ -5,7 +5,7 @@ import { PostContext } from "../context/PostContext";
 import { Link } from "react-router-dom";
 
 const PostDetailView = () => {
-  const { singlePost, getPostById } = useContext(PostContext);
+  const { singlePost, getPostById, setSinglePost } = useContext(PostContext);
   const {
     getCommentsFromPost,
     comments,
@@ -24,6 +24,7 @@ const PostDetailView = () => {
       ...singleComment,
       post: id,
     });
+
   }, []);
 
   const handleCommentChange = (event) => {
@@ -52,7 +53,7 @@ const PostDetailView = () => {
         </div>
         <div style={{ minHeight: 80 }} className="col-4 tags mt-2">
           {singlePost.tags?.map((tag) => (
-            <p>{tag.name}</p>
+            <p key={tag._id}>{tag.name}</p>
           ))}
           {singlePost.tags.length === 0 && <p>No tags to display</p>}
           {user._id === singlePost.author?._id && (
@@ -95,7 +96,7 @@ const PostDetailView = () => {
             }}
           > 
             <p>{comment.user.name}</p>
-            <p key={comment._id}>{comment.content}</p>
+            <p >{comment.content}</p>
             {user._id === comment.user._id && (
               <button 
                 onClick={() => handleDelete(comment)}
