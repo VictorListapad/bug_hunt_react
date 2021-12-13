@@ -6,6 +6,7 @@ export const PostContext = createContext({});
 
 const PostProvider = ({children}) => {
   const jwt_string = "jwtbughunt";
+  const [loading, setLoading] = useState(false);
   const [posts, setPosts] = useState([]);
   const [singlePost, setSinglePost] = useState({
     title: "",
@@ -21,8 +22,13 @@ const PostProvider = ({children}) => {
   }, []);
 
   const getAllPosts = async () => {
+    setTimeout(() => {
+
+    }, 1000)
+    setLoading(true);
     const response = await apiHelper.get("/posts");
     setPosts(response.data);
+    setLoading(false);
   }
 
   const getPostById = async (id) => {
@@ -62,6 +68,7 @@ const PostProvider = ({children}) => {
       value={{
         posts,
         singlePost,
+        loading,
         getPostById,
         createPost,
         editPost,

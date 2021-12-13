@@ -56,7 +56,7 @@ const PostDetailView = () => {
             <p key={tag._id}>{tag.name}</p>
           ))}
           {singlePost.tags.length === 0 && <p>No tags to display</p>}
-          {user._id === singlePost.author?._id && (
+          {user && user?._id === singlePost.author?._id && (
             <Link to={`/editPost/${id}`} className="btn btn-outline-dark">
               Edit
             </Link>
@@ -97,7 +97,7 @@ const PostDetailView = () => {
           > 
             <p>{comment.user.name}</p>
             <p >{comment.content}</p>
-            {user._id === comment.user._id && (
+            {user && user?._id === comment.user._id && (
               <button 
                 onClick={() => handleDelete(comment)}
                 className="btn btn-danger">
