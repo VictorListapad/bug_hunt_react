@@ -8,7 +8,7 @@ const PostCard = ({obj}) => {
       <p>{obj.content}</p>
       <p>
         {obj.tags?.map(tag => (
-          <span key={tag._id}>{tag.name}</span>
+          <span key={tag._id}>#<strong>{tag.name}</strong> </span>
         ))}
       </p>
       <span className="bottomLayer">

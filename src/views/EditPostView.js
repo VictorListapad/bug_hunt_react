@@ -1,40 +1,59 @@
-import { useContext, useEffect } from "react"
+import { useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
+import { CategoryContext } from "../context/CategoryContext";
 import { PostContext } from "../context/PostContext";
 
 const EditPostView = () => {
-  const { singlePost, getPostById, setSinglePost, editPost, deletePost } = useContext(PostContext);
-  const {user} = JSON.parse(localStorage.getItem('jwtbughunt'));
+  const { singlePost, getPostById, setSinglePost, editPost, deletePost } =
+    useContext(PostContext);
+  const { categories } = useContext(CategoryContext);
+  const { user } = JSON.parse(localStorage.getItem("jwtbughunt"));
+  const [selected, setSelected] = useState([]);
   const { id } = useParams();
   const navigate = useNavigate();
 
   useEffect(() => {
+    setSinglePost({...singlePost, tags: [...selected]})
+  }, [selected])
+
+  useEffect(() => {
     getPostById(id);
-  }, [])
+  }, []);
 
   const handleChange = (event) => {
     setSinglePost({
       ...singlePost,
-      [event.target.name]: event.target.value
-    })
-  }
+      [event.target.name]: event.target.value,
+    });
+  };
+
+  const handleSelectCheckbox = (event) => {
+    const value = event.target.value;
+    const currentIndex = selected.findIndex(cat => cat === value);
+    let newChecked = [];
+     // if value not there, add it;
+    if (currentIndex === -1) newChecked = [...selected, value];
+    // else remove it if already checked
+    else newChecked = newChecked.filter(cat => cat !== value);
+    setSelected(newChecked);
+  };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     await editPost(id, singlePost);
-  }
+  };
 
   const handleDelete = async (event) => {
     event.preventDefault();
-    let choice = window.confirm("Are you sure?")
+    let choice = window.confirm("Are you sure?");
     if (!choice) return;
     await deletePost(id);
-    navigate("/")
-  }
+    navigate("/");
+  };
 
   return (
     <div className="container mt-5">
-       <form className="form">
+      <form className="form">
         <h2>Edit Post: {singlePost.title}</h2>
         <label>Title</label>
         <input
@@ -54,6 +73,23 @@ const EditPostView = () => {
           type="text"
           placeholder="content"
         />
+        {categories.map((cat) => (
+          <div
+            key={cat._id}
+            style={{
+              display: "inline-block",
+              width: "auto",
+              marginRight: "5px",
+            }}
+          >
+            <input
+              type="checkbox"
+              onChange={handleSelectCheckbox}
+              value={cat._id}
+            />
+            <label style={{ marginLeft: "2px" }}>{cat.name}</label>
+          </div>
+        ))}
         <br />
         <label>Price</label>
         <input
@@ -81,10 +117,9 @@ const EditPostView = () => {
             </button>
           </>
         )}
-
       </form>
     </div>
-  )
-}
+  );
+};
 
-export default EditPostView
+export default EditPostView;
