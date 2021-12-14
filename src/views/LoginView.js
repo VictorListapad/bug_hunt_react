@@ -1,8 +1,12 @@
-import { useContext } from "react"
+import { useContext, useState } from "react"
 import { AuthContext } from "../context/AuthContext"
 
 const LoginView = () => {
-  const { user, setUser, loginUser } = useContext(AuthContext);
+  const { loginUser } = useContext(AuthContext);
+  const [user, setUser] = useState({
+    name: "",
+    email: ""
+  })
 
   const handleChange = (event) => {
     setUser({
@@ -13,7 +17,11 @@ const LoginView = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    await loginUser({email: user.email, password: user.password});
+    await loginUser(user);
+    setUser({
+      email: "",
+      password: ""
+    })
   }
 
   return (

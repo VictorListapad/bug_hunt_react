@@ -22,13 +22,13 @@ const PostProvider = ({children}) => {
   }, []);
 
   const getAllPosts = async () => {
-    setTimeout(() => {
-
-    }, 1000)
     setLoading(true);
-    const response = await apiHelper.get("/posts");
-    setPosts(response.data);
-    setLoading(false);
+    setTimeout( async () => {
+      
+      const response = await apiHelper.get("/posts");
+      setPosts(response.data);
+      setLoading(false);
+    }, 1000)
   }
 
   const getPostById = async (id) => {
