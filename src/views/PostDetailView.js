@@ -63,7 +63,7 @@ const PostDetailView = () => {
     <div className="container mt-5 postDetails">
       <h2>{singlePost.title}</h2>
       <div className="row">
-        <div className="col-8 mt-4">
+        <div className="col-lg-12 col-12 my-4 codeBox">
           <code>{singlePost.content}</code>
         </div>
         <div style={{ minHeight: 80 }} className="col-4 tags mt-2">
@@ -89,11 +89,12 @@ const PostDetailView = () => {
           func={handleSubmit}
         />
         {comments?.map((comment) => (
-          <CommentCard
-            key={comment._id}
-            func={() => handleDelete(comment)}
-            comment={comment}
-          />
+          <div key={comment._id}>
+            <CommentCard
+              func={() => handleDelete(comment)}
+              comment={comment}
+            />
+          </div>
         ))}
       </div>
     </div>

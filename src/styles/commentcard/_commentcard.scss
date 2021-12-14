@@ -2,8 +2,9 @@
   display: flex;
   justify-content: space-between;
   border: 1px solid lightgrey;
+  max-width: 100%;
   padding: 20px;
-  margin: 10px;
+  margin: 10px auto;
   border-radius: 5px;
   background-color: lightgrey;
 }
