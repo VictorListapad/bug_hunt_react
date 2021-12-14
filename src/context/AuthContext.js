@@ -55,6 +55,9 @@ const AuthProvider = ({children}) => {
   }
   
   const revalidateToken = async () => {
+    // make sure the token is valid otherwise log user out
+    // this can happen if you are testing it in local production
+    // and then test in productio.
     if (!loggedIn) return;
     try {
       const response = await apiHelper.post('/auth/renew');
@@ -62,6 +65,7 @@ const AuthProvider = ({children}) => {
       setUser(data.user);
       setLocalStorageToken(data);
     } catch (error) {
+      localStorage.removeItem(jwt_string);
       console.log(error);
     }
   }

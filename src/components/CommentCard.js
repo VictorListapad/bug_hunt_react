@@ -8,7 +8,7 @@ const CommentCard = ({ comment, func}) => {
   return (
     <div className="commentCard">
       <p>{comment.user.name}</p>
-      <p>{comment.content}</p>
+      <p style={{whiteSpace: 'pre-line'}}>{comment.content}</p>
       { user?._id === comment.user._id && (
         <button
           onClick={func}
