@@ -4,9 +4,6 @@ import { CommentContext } from "../context/CommentContext";
 
 const CommentCard = ({ comment, func}) => {
   const { user } = useContext(AuthContext);
-  const { deleteComment } = useContext(CommentContext)
-
-  
 
   return (
     <div className="commentCard">

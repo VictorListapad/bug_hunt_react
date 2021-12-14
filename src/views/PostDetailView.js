@@ -8,6 +8,7 @@ import CommentCard from "../components/CommentCard";
 import CommentForm from "../components/CommentForm";
 
 const PostDetailView = () => {
+  const { id } = useParams();
   const { user } = useContext(AuthContext);
   const { singlePost, getPostById } = useContext(PostContext);
   // local state for comment
@@ -24,10 +25,8 @@ const PostDetailView = () => {
     createComment,
     deleteComment,
   } = useContext(CommentContext);
-
-  // id from url params
-  const { id } = useParams();
-
+  
+  // initial use effect
   useEffect(() => {
     getPostById(id);
     getCommentsFromPost(id);

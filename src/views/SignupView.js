@@ -3,13 +3,13 @@ import { useNavigate } from "react-router";
 import { AuthContext } from "../context/AuthContext";
 
 const SignupView = () => {
+  const navigate = useNavigate();
   const { signUpUser } = useContext(AuthContext);
   const [user, setUser] = useState({
     name: '',
     email: '',
     password: ''
   })
-  const navigate = useNavigate();
 
   const handleChange = (event) => {
     setUser({

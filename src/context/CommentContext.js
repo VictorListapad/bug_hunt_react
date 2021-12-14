@@ -1,12 +1,10 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useState } from "react";
 import { toast } from "react-toastify";
 import apiHelper from "../apiHelper/apiHelper";
-import { AuthContext } from "./AuthContext";
 
 export const CommentContext = createContext({})
 
 const CommentProvider = ({children}) => {
-  // const { user } = useContext(AuthContext);
   const [comments, setComments] = useState([]);
   const [singleComment, setSingleComment] = useState({
     user: "",
