@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { Container, Nav, Navbar } from "react-bootstrap";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
 import logo from "../images/bug_hunt2.png";
 
@@ -12,7 +12,9 @@ const NavBar = () => {
       <Navbar className="customNavbar" collapseOnSelect expand="lg">
         <Container>
           <Navbar.Brand>
-            <img src={logo} alt="" />
+            <Link to="/">
+              <img src={logo} alt="" />
+            </Link>
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
           <Navbar.Collapse id="responsive-navbar-nav">

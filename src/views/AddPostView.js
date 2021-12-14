@@ -35,14 +35,11 @@ const AddPostView = () => {
     });
   };
 
-  const handleSelectCheckbox = (event) => {
-    const value = event.target.value;
+  const handleSelectCheckbox = (value) => {
     const currentIndex = selected.findIndex(cat => cat === value);
     let newChecked = [];
-     // if value not there, add it;
     if (currentIndex === -1) newChecked = [...selected, value];
-    // else remove it if already checked
-    else newChecked = newChecked.filter(cat => cat !== value);
+    else newChecked = selected.filter(cat => cat !== value);
     setSelected(newChecked);
   };
 
@@ -97,8 +94,8 @@ const AddPostView = () => {
           >
             <input
               type="checkbox"
-              onChange={handleSelectCheckbox}
-              value={cat._id}
+              onChange={() => handleSelectCheckbox(cat._id)}
+              checked={selected.indexOf(cat._id) !== -1}
             />
             <label style={{ marginLeft: "2px" }}>{cat.name}</label>
           </div>
