@@ -1,21 +1,32 @@
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router";
 import { CommentContext } from "../context/CommentContext";
 import { PostContext } from "../context/PostContext";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../context/AuthContext";
+import CommentCard from "../components/CommentCard";
+import CommentForm from "../components/CommentForm";
 
 const PostDetailView = () => {
-  const { singlePost, getPostById, setSinglePost } = useContext(PostContext);
+  const { user } = useContext(AuthContext);
+  const { singlePost, getPostById } = useContext(PostContext);
+  // local state for comment
+  const [singleComment, setSingleComment] = useState({
+    user: "",
+    post: "",
+    content: "",
+  });
+  // comment context
   const {
+    setComments,
     getCommentsFromPost,
     comments,
-    singleComment,
-    setSingleComment,
     createComment,
-    deleteComment
+    deleteComment,
   } = useContext(CommentContext);
+
+  // id from url params
   const { id } = useParams();
-  const { user } = JSON.parse(localStorage.getItem("jwtbughunt"));
 
   useEffect(() => {
     getPostById(id);
@@ -24,7 +35,6 @@ const PostDetailView = () => {
       ...singleComment,
       post: id,
     });
-
   }, []);
 
   const handleCommentChange = (event) => {
@@ -32,17 +42,23 @@ const PostDetailView = () => {
       ...singleComment,
       [event.target.name]: event.target.value,
     });
-    console.log(singleComment);
   };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     await createComment(singleComment);
+    setSingleComment({
+      user: "",
+      post: id,
+      content: "",
+    });
   };
 
   const handleDelete = async (comment) => {
-    await deleteComment(comment, comment._id)
-  }
+    const filtered = comments.filter((val) => val != comment); // clearn on front
+    setComments(filtered); // set new state;
+    await deleteComment(comment, comment._id); // delete on the backend
+  };
 
   return (
     <div className="container mt-5 postDetails">
@@ -68,43 +84,17 @@ const PostDetailView = () => {
         {new Date(singlePost.date).toLocaleDateString()}
       </p>
       <div className="row">
-        <form style={{ border: "solid 1px lightgrey", margin: "20px 0" }}>
-          <textarea
-            value={singleComment.content}
-            onChange={handleCommentChange}
-            className="form-control my-3"
-            name="content"
-          />
-          <button
-            onClick={handleSubmit}
-            className="form-control my-3 btn btn-outline-dark"
-          >
-            Comment
-          </button>
-        </form>
+        <CommentForm
+          handleCommentChange={handleCommentChange}
+          singleComment={singleComment}
+          func={handleSubmit}
+        />
         {comments?.map((comment) => (
-          <div
+          <CommentCard
             key={comment._id}
-            style={{
-              display: "flex",
-              justifyContent: "space-between",
-              border: "1px solid lightgrey",
-              padding: 20,
-              margin: 10,
-              borderRadius: 5,
-              backgroundColor: "lightgrey",
-            }}
-          > 
-            <p>{comment.user.name}</p>
-            <p >{comment.content}</p>
-            {user && user?._id === comment.user._id && (
-              <button 
-                onClick={() => handleDelete(comment)}
-                className="btn btn-danger">
-                Delete
-              </button>
-            )}
-          </div>
+            func={() => handleDelete(comment)}
+            comment={comment}
+          />
         ))}
       </div>
     </div>

@@ -5,7 +5,7 @@ import { AuthContext } from "../context/AuthContext";
 import logo from "../images/bug_hunt2.png";
 
 const NavBar = () => {
-  const { loggedIn, logOutUser, user, userName } = useContext(AuthContext);
+  const { loggedIn, logOutUser, user } = useContext(AuthContext);
 
   return (
     <div>
@@ -23,7 +23,7 @@ const NavBar = () => {
             <Nav>
               {loggedIn ? (
                 <>
-                  <a style={{marginTop: 7}}>Welcome, {userName}</a>
+                  <a style={{marginTop: 7}}>Welcome, {user.name}</a>
                   <button onClick={logOutUser} className="btn btn-outline-dakr">
                     Log Out
                   </button>

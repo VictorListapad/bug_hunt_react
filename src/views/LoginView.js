@@ -1,10 +1,12 @@
 import { useContext, useState } from "react"
+import { useNavigate } from "react-router";
 import { AuthContext } from "../context/AuthContext"
 
 const LoginView = () => {
+  const navigate = useNavigate();
   const { loginUser } = useContext(AuthContext);
   const [user, setUser] = useState({
-    name: "",
+    password: "",
     email: ""
   })
 
@@ -22,6 +24,7 @@ const LoginView = () => {
       email: "",
       password: ""
     })
+    navigate("/")
   }
 
   return (

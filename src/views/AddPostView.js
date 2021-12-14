@@ -33,7 +33,6 @@ const AddPostView = () => {
       ...singlePost,
       [event.target.name]: event.target.value,
     });
-    console.log(singlePost);
   };
 
   const handleSelectCheckbox = (event) => {
